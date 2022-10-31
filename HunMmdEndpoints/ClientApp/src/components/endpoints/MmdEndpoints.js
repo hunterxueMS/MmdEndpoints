@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import debounce from "lodash/debounce";
 import { useEndpointStore } from "../../store/EndpointStore";
+import { getEndpoints } from "../../services/endpoints/client";
 
 export function MmdEndpoints(props) {
     const [endpoints, setEndpoints] = useState([]);
@@ -25,21 +26,8 @@ export function MmdEndpoints(props) {
 
     const populateEndpoints = async (pathPart, serviceType) => {
         setLoading(true);
-        let url = 'mmd';
-        url += '?serviceType=' + serviceType;
-        if (pathPart !== null && pathPart !== '') url += '&pathInput=' + pathPart;
-        // attach headers
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-ClientId': 'mmd-client',
-            }
-        };
-
-        const response = await fetch(url, requestOptions);
-        const data = await response.json();
-        setEndpoints(data)
+        const data = await getEndpoints(pathPart, serviceType);
+        setEndpoints(data);
         setLoading(false);
     };
 

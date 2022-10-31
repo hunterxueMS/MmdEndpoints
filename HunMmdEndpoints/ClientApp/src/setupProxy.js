@@ -4,8 +4,9 @@ const { env } = require('process');
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:48887';
 
+console.log(`setupProxy, target=${target}, env.ASPNETCORE_URLS=${env.ASPNETCORE_URLS}, env.ASPNETCORE_HTTPS_PORT=${env.ASPNETCORE_HTTPS_PORT}`);
+
 const context =  [
-  "/weatherforecast",
   "/mmd",
 ];
 

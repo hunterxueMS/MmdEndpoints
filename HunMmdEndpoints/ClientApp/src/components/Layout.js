@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import { NavMenu } from './NavMenu';
+import { useAccountStore } from "../store/AccountStore";
+import { useAuthEffect } from "../auth/authHook";
+import { useAuthStore } from "../auth/authStore";
 
-export class Layout extends Component {
-  static displayName = Layout.name;
+const Layout = (props) => {
+    const getGraphMeAndSet = useAccountStore((state) => state.getGraphMeAndSet);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  render() {
+    useAuthEffect();
+
+    React.useEffect(() => {
+        if (isAuthenticated) {
+            getGraphMeAndSet();
+        }
+    }, [isAuthenticated, getGraphMeAndSet]);
     return (
-      <div>
-        <NavMenu />
-        <Container>
-          {this.props.children}
-        </Container>
-      </div>
+        <div>
+            <NavMenu />
+            <Container>
+                {props.children}
+            </Container>
+        </div>
     );
-  }
 }
+export { Layout };

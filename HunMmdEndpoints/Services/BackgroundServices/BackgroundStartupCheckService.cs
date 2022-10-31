@@ -22,20 +22,21 @@ public class BackgroundStartupCheckService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        try
-        {
-            // Simulate the effect of a long-running task.
-            foreach (MMDServiceType serviceType in Enum.GetValues<MMDServiceType>())
-            {
-                //preload the cache
-                await _endpointModelService!.getEndpoints(serviceType);
-            }
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "fail to preload services, stop application now");
-            _applicationLifetime.StopApplication();
-        }
+        //try
+        //{
+        //    // Simulate the effect of a long-running task.
+        //    foreach (MMDServiceType serviceType in Enum.GetValues<MMDServiceType>())
+        //    {
+        //        //preload the cache
+        //        await _endpointModelService!.getEndpoints(serviceType);
+        //    }
+        //}
+        //catch (Exception e)
+        //{
+        //    _logger.LogError(e, "fail to preload services, stop application now");
+        //    _applicationLifetime.StopApplication();
+        //}
+        await Task.CompletedTask;
         _healthCheck.StartupCompleted = true;
     }
 }
